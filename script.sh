@@ -33,6 +33,7 @@ sudo modprobe -r pn533_usb
 sudo modprobe -r pn533
 
 mfoc-hardnested -O dump.mfd
+# -k 6001fe966778 -k 447524f55503
 
 
 # ************** WRITE USER PROMPT **************
@@ -48,16 +49,15 @@ sudo modprobe -r pn533
 
 mfoc-hardnested -O source.mfd
 
-nfc-mfclassic W a dump.mfd source.mfd
-nfc-mfclassic W b dump.mfd source.mfd
+nfc-mfclassic W a source.mfd dump.mfd
+nfc-mfclassic W b source.mfd dump.mfd
 
 
 # ******* CLEAN UP *****************************
 
 printf "\n\n\n\n\nPlease check cards with Mifare Classic Tool (MCT) on Android"
 
-mkdir -p archived-dumps
-mv dump.mfd "archived-dumps/$(date + "%F %T")-KEYDUMP.mfd"
-mv source.mfd "archived-dumps/$(date + "%F %T")-SOURCEDUMP.mfd"
+rm dump.mfd
+rm source.mfd
 
 
