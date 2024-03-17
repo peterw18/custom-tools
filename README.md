@@ -6,4 +6,4 @@ This is a repository containing my .sh files for kali to automate certain proces
 A script for Kali Linux that will crack a Mifare Classic 1K key with a hardnested attack, then write its data to another card.
 Requires an NFC reader/writer component.
 
-Warning: Only writes the first block of each sector. This is believed to be a bug with libnfc (https://github.com/nfc-tools/libnfc/issues/564). Mifare Classic Tool (Android) or equivalent is required to fully clone the tag.
+**Warning: Only writes the first block of each sector. This is believed to be a bug with libnfc (https://github.com/nfc-tools/libnfc/issues/564). Mifare Classic Tool (Android) or equivalent is required to fully clone the tag.**
