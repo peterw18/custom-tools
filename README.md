@@ -6,7 +6,7 @@ This is a repository containing my .sh files for kali to automate certain proces
 A script for Kali Linux that will crack a Mifare Classic 1K key with a hardnested attack, then write its data to another card.
 Requires an NFC reader/writer component.
 
-script usage: sudo ./MFC-hardnested-RW.sh [-h] [-i] [-r] [-c] [-d dumpname] \n
+script usage: sudo ./MFC-hardnested-RW.sh [-h] [-i] [-r] [-c] [-d dumpname] <br>
 -h: Display this help dialog. \n
 -i: Install mode. Installs required dependencies before running the script. \n
 -r: Read-Only mode. Dumps  will be outputted to /dumps. \n
