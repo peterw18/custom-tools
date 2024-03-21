@@ -37,7 +37,7 @@ while getopts 'hircd:' OPTION; do
 			;;
 		i)
 			sudo apt-get -y update
-			sudo apt-get -y install git binutils make csh g++ sed gawk autoconf automake
+			sudo apt-get -y install git binutils make csh g++ sed gawk autoconf automake autotools-dev libglib2.0-dev libnfc-dev liblzma-dev libnfc-bin
 			git clone https://github.com/nfc-tools/mfoc-hardnested
 			cd mfoc-hardnested
 			autoreconf -vis
@@ -75,7 +75,8 @@ sudo modprobe -r pn533
 
 mkdir -p dumps
 
-mfoc-hardnested -O "dumps/$dumpname.mfd" -k 6001fe966778 -k 447524f55503
+mfoc-hardnested -O "dumps/$dumpname.mfd"
+# -k 6001fe966778 -k 447524f55503
 
 
 # ************** WRITE USER PROMPT **************
