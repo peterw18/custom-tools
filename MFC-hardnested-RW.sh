@@ -76,6 +76,7 @@ sudo modprobe -r pn533
 mkdir -p dumps
 
 mfoc-hardnested -O "dumps/$dumpname.mfd"
+# -k 2AC875E81C72 -k 7BACF8B69BE7
 # -k 6001fe966778 -k 447524f55503
 
 
