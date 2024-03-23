@@ -95,8 +95,8 @@ sudo modprobe -r pn533
 
 mfoc-hardnested -O dumps/source.mfd
 
-nfc-mfclassic W a source.mfd dump.mfd
-nfc-mfclassic W b source.mfd dump.mfd
+nfc-mfclassic W a dumps/source.mfd "dumps/$dumpname.mfd"
+nfc-mfclassic W b dumps/source.mfd "dumps/$dumpname.mfd"
 
 
 # ******* CLEAN UP *****************************
