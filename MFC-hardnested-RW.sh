@@ -20,11 +20,11 @@ write="True"
 cleanup="False"
 dumpname="dump"
 sourcename="source"
-
+params=""
 
 #************* READ FLAGS ***********************
 
-while getopts 'hircd:' OPTION; do
+while getopts 'hircdk:' OPTION; do
 	case "$OPTION" in
 		h)
 			printf "script usage: sudo ./$(basename $0) [-h] [-i] [-r] [-c] [-d dumpname] \n\n\n
@@ -32,7 +32,8 @@ while getopts 'hircd:' OPTION; do
 -i: Install mode. Installs required dependencies before running the script.\n
 -r: Read-Only mode. Dumps  will be outputted to ${PWD}/dumps.\n
 -c: Clean up. Removes dumps once the script has completed.\n
--d dumpname: Specifies the filename of the dump.\n"
+-d dumpname: Specifies the filename of the dump.\n
+-k keyfile: Specifies the filename for custom keys.\n"
 			exit 1
 			;;
 		i)
@@ -54,8 +55,15 @@ while getopts 'hircd:' OPTION; do
 		d)
 			dumpname="$OPTARG"
 			;;
+		k)
+			mapfile -t keysArr < "$OPTARG"
+
+			for key in "${keysArr[@]}"; do
+				params+="-k $key "
+			done
+			;;
 		?)
-			printf "Unrecognised Flag. Use -h for usage"
+			printf "Unrecognised flag. Use -h for usage"
 			exit 1
 			;;
 	esac
@@ -64,7 +72,7 @@ shift "$(($OPTIND -1))"
 
 # ************** READ USER PROMPT ***************
 
-printf "\n\n\n\n\nPlace the card to read on the NFC attachment"
+printf "\n\n\n\n*********************************\nPlace the card to crack on the NFC attachment\n*********************************"
 read input
 
 
@@ -75,16 +83,14 @@ sudo modprobe -r pn533
 
 mkdir -p dumps
 
-mfoc-hardnested -O "dumps/$dumpname.mfd"
-# -k 2AC875E81C72 -k 7BACF8B69BE7
-# -k 6001fe966778 -k 447524f55503
+mfoc-hardnested -O "dumps/$dumpname.mfd" -F $params
 
 
 # ************** WRITE USER PROMPT **************
 
 if [ "$write" = "True" ]; then
 
-printf "\n\n\n\n\nPlace the card to be written on the NFC attachment"
+printf "\n\n\n\n*********************************\nPlace the card to be written on the NFC attachment\n*********************************"
 read input
 
 
@@ -93,7 +99,7 @@ read input
 sudo modprobe -r pn533_usb
 sudo modprobe -r pn533
 
-mfoc-hardnested -O dumps/source.mfd
+mfoc-hardnested -O dumps/source.mfd -F $params
 
 nfc-mfclassic W a dumps/source.mfd "dumps/$dumpname.mfd"
 nfc-mfclassic W b dumps/source.mfd "dumps/$dumpname.mfd"
@@ -101,14 +107,15 @@ nfc-mfclassic W b dumps/source.mfd "dumps/$dumpname.mfd"
 
 # ******* CLEAN UP *****************************
 
-printf "\n\n\n\n\nPlease update sectors with Mifare Classic Tool (MCT) on Android"
+rm dumps/source.mfd
 
+printf "\n\n\n\n*********************************\nPlease update sectors with Mifare Classic Tool (MCT) on Android\n"
+printf "This is due to a bug with libnfc, please open script for more details\n*********************************"
 fi
 
 if [ "$cleanup" = "True" ]; then
 
-rm dumps/dump.mfd
-rm dumps/source.mfd
+rm "dumps/$dumpname.mfd"
 rmdir -d dumps
 
 fi
