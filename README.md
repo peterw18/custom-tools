@@ -1,10 +1,10 @@
-# scripts
+# custom-tools
 
-This is a repository containing .sh files for kali to automate certain processes. See below:
+This is a repository containing simple tools I've developed for ease of use. See below:
 
 ## MFC-hardnested-RW.sh
-A script for Kali Linux that will crack a Mifare Classic 1K key with a hardnested attack, then write its data to another card.
-Requires an NFC reader/writer component.
+A bash script that will crack a Mifare Classic 1K key with a hardnested attack, then write its data to another card, using linux libraries.
+**Requires an NFC reader/writer component.**
 
 script usage: sudo ./MFC-hardnested-RW.sh [-h] [-i] [-r] [-c] [-d dumpname] <br>
 -h: Display this help dialog. <br>
